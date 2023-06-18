@@ -51,6 +51,7 @@ import com.skydoves.cloudy.internals.render.RenderScriptToolkit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.IllegalArgumentException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -232,15 +233,19 @@ private suspend fun View.drawToBitmapPostLaidOut(
 ): Bitmap? {
   return suspendCoroutine { continuation ->
     doOnLayout {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        drawBitmapWithPixelCopy(
-          window = window,
-          layoutInfo = layoutInfo,
-          onSuccess = { bitmap -> continuation.resume(bitmap) },
-          onError = { error -> continuation.resumeWithException(error) }
-        )
-      } else {
+      try {
         continuation.resume(this.drawToBitmap())
+      } catch (e: IllegalArgumentException) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          drawBitmapWithPixelCopy(
+            window = window,
+            layoutInfo = layoutInfo,
+            onSuccess = { bitmap -> continuation.resume(bitmap) },
+            onError = { error -> continuation.resumeWithException(error) }
+          )
+        } else {
+          continuation.resumeWithException(e)
+        }
       }
     }
   }
