@@ -7,6 +7,7 @@ plugins {
   alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
   alias(libs.plugins.kotlinBinaryCompatibilityValidator)
+  `maven-publish`
 }
 
 apply(from ="${rootDir}/scripts/publish-root.gradle")
