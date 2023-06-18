@@ -1,5 +1,7 @@
 import com.skydoves.cloudy.Configuration
 
+apply plugin: 'maven-publish'
+
 // Create variables with empty default values
 
 ext["ossrhUsername"] = ''
