@@ -19,6 +19,7 @@ import com.skydoves.cloudy.Configuration
 plugins {
   id(libs.plugins.android.application.get().pluginId)
   id(libs.plugins.kotlin.android.get().pluginId)
+  `maven-publish`
 }
 
 android {

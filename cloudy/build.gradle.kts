@@ -19,7 +19,7 @@ import com.skydoves.cloudy.Configuration
 plugins {
   id(libs.plugins.android.library.get().pluginId)
   id(libs.plugins.kotlin.android.get().pluginId)
-  id("maven-publish")
+  `maven-publish`
 }
 
 group = "com.github.nubpro"

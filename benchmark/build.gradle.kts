@@ -19,6 +19,7 @@ import com.skydoves.cloudy.Configuration
 plugins {
   id("com.android.test")
   id("org.jetbrains.kotlin.android")
+  `maven-publish`
 }
 
 android {
